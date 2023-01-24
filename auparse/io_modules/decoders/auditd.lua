@@ -88,6 +88,10 @@ function decode(data, dh, mutable)
        (ftype == auparse_type.SIGNAL) or
        (ftype == auparse_type.EXIT) or
        (ftype == auparse_type.TTY_DATA) then fval = aup.auparse_interpret_field(au)
+-- we don't want to interpret *uid,*gid fields here since auparse will try
+-- to resolve all of them with *uids and *gids from system on which it's running;
+-- make sure you have set 'log_format = ENRICHED' option in /etc/audit/auditd.conf
+-- on all auditlog-emitters for proper *UID, *GID extracting 
     elseif (ftype == auparse_type.UID) or
            (ftype == auparse_type.GID) or
            (ftype == auparse_type.SYSCALL) or
@@ -108,3 +112,4 @@ function decode(data, dh, mutable)
 end
 
 return M
+
