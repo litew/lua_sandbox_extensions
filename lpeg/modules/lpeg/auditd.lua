@@ -21,7 +21,7 @@ local ident         = ident_byte^1
 local hostname      = (l.alnum + l.punct + l.S"-.")^1
 local node          = l.Cg(l.C(l.P"node") * "=" * l.C(hostname))
 local rec_type      = l.Cg(l.C(l.P"type") * "=" * l.C(type_value))
-local msg           = l.Cg(l.C(l.P"msg")  * "=" * l.Ct(l.P'audit(' * l.C(l.digit^1) * l.P"." * l.C(l.digit^1) * l.P":" * l.C(l.digit^1) * l.P"):"))
+local msg           = l.Cg(l.P"msg" * "=" * l.P'audit(' * l.Cc("timestamp") * l.C(l.digit^1)) * l.Cg(l.P"." * l.Cc("milli") * l.C(l.digit^1)) * l.P":" * l.Cg(l.Cc("event_id") * l.C(l.digit^1)) * l.P"):"
 local key           = l.C(ident)
 local value         = l.C(l.P{'"' * ((1 - l.S'"') + l.V(1))^0 * '"'}) + l.C(ident)
 local pair          = garbage^0 * l.Cg((key * "=" * value) + (key * "=" * l.C"") + (key * l.Cc(true)))
