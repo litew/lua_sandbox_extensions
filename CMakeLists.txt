@@ -32,6 +32,8 @@ if(LUA51) # build against installed lua 5.1
     set(TEST_MODULE_PATH "${CMAKE_SOURCE_DIR}/common/?.lua;${TEST_MODULE_PATH}")
 else() # lua_sandbox build
     find_package(luasandbox 1.2.1 REQUIRED CONFIG)
+    include_directories($ENV{INCLUDE_PATH})
+    link_directories($ENV{LIBRARY_PATH})
     set(LUA_LIBRARIES ${LUASANDBOX_LIBRARIES})
     set(LUA_INCLUDE_DIR ${LUASANDBOX_INCLUDE_DIR}/luasandbox)
     set(INSTALL_MODULE_PATH ${CMAKE_INSTALL_LIBDIR}/luasandbox/modules)
